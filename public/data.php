@@ -47,6 +47,13 @@ try {
     $json     = (string) $response->getBody();
 
     if (!$json) {
+        if (file_exists($filePath)) {
+            // If empty response, send last data if it exists
+            header('X-Data-Cached: true');
+            echo file_get_contents($filePath);
+            exit;
+        }
+
         http_response_code(400);
         echo json_encode([
             'error' => 'Empty response',
