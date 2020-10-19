@@ -1,27 +1,17 @@
-<?php
-$validAreas = include dirname(__DIR__) . '/areas.php';
-$area = 'Scotland';
-if (!empty($_GET['area'])) {
-    $area = filter_var(urldecode($_GET['area']), FILTER_SANITIZE_STRING);
-    if (!in_array($area, $validAreas)) {
-        $area = 'Scotland';
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Coronavirus (COVID-19) statistics for <?php echo $area; ?></title>
+    <title>Coronavirus (COVID-19) statistics for Scotland</title>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" href="/style.css">
 </head>
 <body class="bg-gray-100 bg-gradient-to-b from-blue-50 via-gray-100 to-gray-100">
     <div x-data="component()" x-init="init()" class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <header class="mb-16 text-center">
-            <h1 id="page_title" class="text-3xl tracking-tight leading-10 font-extrabold text-gray-900 mb-10 sm:text-4xl md:text-5xl">Coronavirus (COVID-19) statistics for <?php echo $area; ?></h1>
+            <h1 id="page_title" class="text-3xl tracking-tight leading-10 font-extrabold text-gray-900 mb-10 sm:text-4xl md:text-5xl">Coronavirus (COVID-19) statistics for Scotland</h1>
             <div class="max-w-lg mx-auto md:flex">
                 <div class="max-w-xs mx-auto mb-6 md:max-w-none md:mx-4 md:mb-0">
                     <select id="select_area" class="form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5">
