@@ -46,42 +46,44 @@
         </header>
 
         <div class="mb-10">
-            <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+            <div
+                class="mt-5 grid grid-cols-1 gap-5"
+                :class="{ 'sm:grid-cols-2': selectedArea != '', 'sm:grid-cols-3': selectedArea == '' }">
                 <div class="bg-white overflow-hidden shadow rounded-lg">
-                <div class="px-4 py-5 sm:p-6">
-                    <dl>
-                        <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                            Total New Cases
-                        </dt>
-                        <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
-                            <span id="total-cases"></span>
-                        </dd>
-                    </dl>
+                    <div class="px-4 py-5 sm:p-6">
+                        <dl>
+                            <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
+                                Total New Cases
+                            </dt>
+                            <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                                <span id="total-cases"></span>
+                            </dd>
+                        </dl>
+                    </div>
                 </div>
+                <div class="bg-white overflow-hidden shadow rounded-lg" x-show="selectedArea == ''">
+                    <div class="px-4 py-5 sm:p-6">
+                        <dl>
+                            <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
+                                Total Hospital Admissions
+                            </dt>
+                            <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                                <span id="total-admissions"></span>
+                            </dd>
+                        </dl>
+                    </div>
                 </div>
                 <div class="bg-white overflow-hidden shadow rounded-lg">
-                <div class="px-4 py-5 sm:p-6">
-                    <dl>
-                        <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                            Total Hospital Admissions
-                        </dt>
-                        <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
-                            <span id="total-admissions"></span>
-                        </dd>
-                    </dl>
-                </div>
-                </div>
-                <div class="bg-white overflow-hidden shadow rounded-lg">
-                <div class="px-4 py-5 sm:p-6">
-                    <dl>
-                        <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                            Total Deaths
-                        </dt>
-                        <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
-                            <span id="total-deaths"></span>
-                        </dd>
-                    </dl>
-                </div>
+                    <div class="px-4 py-5 sm:p-6">
+                        <dl>
+                            <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
+                                Total Deaths
+                            </dt>
+                            <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                                <span id="total-deaths"></span>
+                            </dd>
+                        </dl>
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,22 +96,17 @@
             </div>
         </div>
 
-        <div class="md:grid md:gap-4 lg:gap-10 md:grid-cols-2">
-            <div>
-                <div class="bg-white overflow-hidden shadow rounded-lg mb-10">
-                    <div class="px-4 py-5 sm:p-6">
-                        <h2>Hospital Admissions</h2>
-                        <div id="chart-admissions"></div>
-                    </div>
-                </div>
+        <div class="bg-white overflow-hidden shadow rounded-lg mb-10" x-show="selectedArea == ''">
+            <div class="px-4 py-5 sm:p-6">
+                <h2>Hospital Admissions</h2>
+                <div id="chart-admissions"></div>
             </div>
-            <div>
-                <div class="bg-white overflow-hidden shadow rounded-lg mb-10">
-                    <div class="px-4 py-5 sm:p-6">
-                        <h2>Deaths</h2>
-                        <div id="chart-deaths"></div>
-                    </div>
-                </div>
+        </div>
+
+        <div class="bg-white overflow-hidden shadow rounded-lg mb-10">
+            <div class="px-4 py-5 sm:p-6">
+                <h2>Deaths</h2>
+                <div id="chart-deaths"></div>
             </div>
         </div>
 

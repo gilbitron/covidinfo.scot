@@ -134,6 +134,10 @@ function component() {
             });
         },
         createChart(id, chartData, color) {
+            if (id === 'admissions' && this.selectedArea != '') {
+                return;
+            }
+
             if (typeof this.charts[id] === 'undefined') {
                 this.charts[id] = new frappe.Chart('#chart-'+id, {
                     data: chartData,
