@@ -5,9 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Coronavirus (COVID-19) statistics for Scotland</title>
+    <meta name="description" content="An easy way to view coronavirus (COVID-19) statistics for Scotland and its regional areas.">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" href="/style.css">
     <script src="https://cdn.usefathom.com/script.js" data-site="IWCIYVWP" defer></script>
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://covidinfo.scot/">
+    <meta property="og:title" content="Coronavirus (COVID-19) statistics for Scotland">
+    <meta property="og:description" content="An easy way to view coronavirus (COVID-19) statistics for Scotland and its regional areas.">
+    <meta property="og:image" content="https://covidinfo.scot/covid.jpg">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://covidinfo.scot/">
+    <meta property="twitter:title" content="Coronavirus (COVID-19) statistics for Scotland">
+    <meta property="twitter:description" content="An easy way to view coronavirus (COVID-19) statistics for Scotland and its regional areas.">
+    <meta property="twitter:image" content="https://covidinfo.scot/covid.jpg">
 </head>
 <body class="bg-gray-100 bg-gradient-to-b from-blue-50 via-gray-100 to-gray-100">
     <div x-data="component()" x-init="init()" class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
