@@ -7,6 +7,7 @@
     <title>Coronavirus (COVID-19) statistics for Scotland</title>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" href="/style.css">
+    <script src="https://cdn.usefathom.com/script.js" data-site="IWCIYVWP" defer></script>
 </head>
 <body class="bg-gray-100 bg-gradient-to-b from-blue-50 via-gray-100 to-gray-100">
     <div x-data="component()" x-init="init()" class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
