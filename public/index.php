@@ -14,40 +14,14 @@
             <h1 id="page_title" class="text-3xl tracking-tight leading-10 font-extrabold text-gray-900 mb-10 sm:text-4xl md:text-5xl">Coronavirus (COVID-19) statistics for Scotland</h1>
             <div class="max-w-lg mx-auto md:flex">
                 <div class="max-w-xs mx-auto mb-6 md:max-w-none md:mx-4 md:mb-0">
-                    <select id="select_area" class="form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5">
+                    <select
+                        x-ref="selectAreaInput"
+                        x-model="selectedArea"
+                        class="form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5">
                         <option value="">Scotland</option>
-                        <option value="Aberdeen City">Aberdeen City</option>
-                        <option value="Aberdeenshire">Aberdeenshire</option>
-                        <option value="Angus">Angus</option>
-                        <option value="Argyll and Bute">Argyll and Bute</option>
-                        <option value="Clackmannanshire">Clackmannanshire</option>
-                        <option value="Dumfries and Galloway">Dumfries and Galloway</option>
-                        <option value="Dundee City">Dundee City</option>
-                        <option value="East Ayrshire">East Ayrshire</option>
-                        <option value="East Dunbartonshire">East Dunbartonshire</option>
-                        <option value="East Lothian">East Lothian</option>
-                        <option value="East Renfrewshire">East Renfrewshire</option>
-                        <option value="City of Edinburgh">Edinburgh</option>
-                        <option value="Falkirk">Falkirk</option>
-                        <option value="Fife">Fife</option>
-                        <option value="Glasgow City">Glasgow City</option>
-                        <option value="Highland">Highland</option>
-                        <option value="Inverclyde">Inverclyde</option>
-                        <option value="Midlothian">Midlothian</option>
-                        <option value="Moray">Moray</option>
-                        <option value="Na h-Eileanan an Iar">Na h-Eileanan an Iar</option>
-                        <option value="North Ayrshire">North Ayrshire</option>
-                        <option value="North Lanarkshire">North Lanarkshire</option>
-                        <option value="Orkney Islands">Orkney Islands</option>
-                        <option value="Perth and Kinross">Perth and Kinross</option>
-                        <option value="Renfrewshire">Renfrewshire</option>
-                        <option value="Scottish Borders">Scottish Borders</option>
-                        <option value="Shetland Islands">Shetland Islands</option>
-                        <option value="South Ayrshire">South Ayrshire</option>
-                        <option value="South Lanarkshire">South Lanarkshire</option>
-                        <option value="Stirling">Stirling</option>
-                        <option value="West Dunbartonshire">West Dunbartonshire</option>
-                        <option value="West Lothian">West Lothian</option>
+                        <template x-for="(area, index) in validAreas" :key="index">
+                            <option x-bind:value="area" x-text="area"></option>
+                        </template>
                     </select>
                 </div>
                 <div>
@@ -152,30 +126,38 @@
         function component() {
             return {
                 responseData: null,
-                timescale: 'alltime',
                 charts: [],
+                validAreas: <?php echo json_encode(require dirname(__DIR__) . '/areas.php'); ?>,
+                selectedArea: '',
+                validTimescales: ['alltime', '30days'],
+                timescale: 'alltime',
                 init() {
+                    this.$watch('selectedArea', value => this.onSelectedAreaChange(value));
+
                     const queryParams = new URLSearchParams(window.location.search);
                     const initialArea = queryParams.get('area');
-                    this.getData(initialArea ? initialArea : '');
+                    const initialTimescale = queryParams.get('timescale');
 
-                    const selectElement = document.getElementById('select_area');
-                    selectElement.addEventListener('change', (event) => {
-                        const area = event.target.value;
-                        this.getData(area);
+                    if (this.validTimescales.includes(initialTimescale)) {
+                        this.timescale = initialTimescale;
+                    }
 
-                        let queryParams = new URLSearchParams(window.location.search);
-                        queryParams.set('area', area);
-                        history.replaceState(null, null, area ? '?' + queryParams.toString() : '/');
-
-                        this.updateTitle(area);
-                    });
+                    if (this.validAreas.includes(initialArea)) {
+                        this.selectedArea = initialArea;
+                    } else {
+                        this.getData();
+                        this.updateTitle();
+                    }
                 },
-                getData(area = '') {
-                    const selectElement = document.getElementById('select_area');
-                    selectElement.disabled = true;
+                onSelectedAreaChange() {
+                    this.getData();
+                    this.updateTitle();
+                    this.updateQueryParams();
+                },
+                getData() {
+                    this.$refs.selectAreaInput.disabled = true;
 
-                    fetch('/data.php?area=' + encodeURI(area))
+                    fetch('/data.php?area=' + encodeURI(this.selectedArea))
                         .then(response => response.json())
                         .then(result => {
                             this.responseData = result.data;
@@ -185,8 +167,7 @@
                             console.error(error);
                         })
                         .finally(() => {
-                            const selectElement = document.getElementById('select_area');
-                            selectElement.disabled = false;
+                            this.$refs.selectAreaInput.disabled = false;
                         });
                 },
                 updateData() {
@@ -223,10 +204,16 @@
                         datasets: [{ name: 'Deaths', values: newDeaths }]
                     }, '#F56565');
                 },
-                updateTitle(area) {
-                    let title = 'Coronavirus (COVID-19) statistics for ' + (area ? area : 'Scotland');
+                updateTitle() {
+                    let title = 'Coronavirus (COVID-19) statistics for ' + (this.selectedArea ? this.selectedArea : 'Scotland');
                     document.getElementById('page_title').innerText = title;
                     document.title = title;
+                },
+                updateQueryParams() {
+                    let queryParams = new URLSearchParams(window.location.search);
+                    queryParams.set('area', this.selectedArea);
+                    queryParams.set('timescale', this.timescale);
+                    history.replaceState(null, null, '?' + queryParams.toString());
                 },
                 getLabels(data) {
                     return data.map(item => {
@@ -261,6 +248,7 @@
                 changeTimescale(newTimescale) {
                     this.timescale = newTimescale;
                     this.updateData();
+                    this.updateQueryParams();
                 }
             }
         }
