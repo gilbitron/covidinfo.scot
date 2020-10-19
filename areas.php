@@ -20,7 +20,7 @@ return [
     'Inverclyde',
     'Midlothian',
     'Moray',
-    'Na h-Eileanan an Iar',
+    'Na h-Eileanan Siar',
     'North Ayrshire',
     'North Lanarkshire',
     'Orkney Islands',
