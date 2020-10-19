@@ -1,0 +1,26 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+select:disabled {
+    @apply bg-gray-100 text-gray-300;
+}
+
+button.active {
+    @apply bg-indigo-500 text-white shadow-inner;
+}
+button.active:hover {
+    @apply text-white;
+}
+button.active:active {
+    @apply bg-indigo-600 text-white;
+}
+
+footer a {
+    @apply text-indigo-400;
+}
+footer a:hover {
+    @apply text-indigo-400 underline;
+}
