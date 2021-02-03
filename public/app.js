@@ -65,10 +65,10 @@ function component() {
         getData() {
             this.$refs.selectAreaInput.disabled = true;
 
-            fetch('/data.php?area=' + encodeURI(this.selectedArea))
+            fetch('/data-v2.php?area=' + encodeURI(this.selectedArea))
                 .then(response => response.json())
                 .then(result => {
-                    this.responseData = result.data;
+                    this.responseData = result.data || result.body;
                     this.updateData();
                 })
                 .catch(error => {
@@ -88,9 +88,9 @@ function component() {
             }
 
             const labels = this.getLabels(data);
-            const newCases = this.getValues(data, 'newCases');
+            const newCases = this.getValues(data, 'newCasesByPublishDate');
             const newAdmissions = this.getValues(data, 'newAdmissions');
-            const newDeaths = this.getValues(data, 'newDeaths');
+            const newDeaths = this.getValues(data, 'newDeaths28DaysByPublishDate');
 
             const totalCases = newCases.reduce((sum, val) => sum + val, 0);
             document.getElementById('total-cases').innerText = totalCases.toLocaleString();
