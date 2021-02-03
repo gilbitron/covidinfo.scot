@@ -23,6 +23,8 @@ $queryString .= '&metric=' . implode('&metric=', [
     'newCasesByPublishDate',
     'newAdmissions',
     'newDeaths28DaysByPublishDate',
+    'newPeopleVaccinatedFirstDoseByPublishDate',
+    'cumPeopleVaccinatedFirstDoseByPublishDate',
 ]);
 $queryString .= '&format=json';
 

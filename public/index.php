@@ -123,6 +123,20 @@
             </div>
         </div>
 
+        <div class="bg-white overflow-hidden shadow rounded-lg mb-10" x-show="selectedArea == ''">
+            <div class="px-4 py-5 sm:p-6">
+                <h2>New Vaccinations (1st dose)</h2>
+                <div id="chart-new-vaccinations"></div>
+            </div>
+        </div>
+
+        <div class="bg-white overflow-hidden shadow rounded-lg mb-10" x-show="selectedArea == ''">
+            <div class="px-4 py-5 sm:p-6">
+                <h2>Cumulative Vaccinations (1st dose)</h2>
+                <div id="chart-cum-vaccinations"></div>
+            </div>
+        </div>
+
         <footer class="text-sm text-gray-400 leading-7 mt-4">
             <p>Created by <a href="https://gilbitron.me" target="_blank">Gilbert Pellegrom</a> from <a href="https://dev7studios.co" target="_blank">Dev7studios</a>.</p>
             <p>Data supplied by the <a href="https://coronavirus.data.gov.uk/" target="_blank">UK Government</a> under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" target="_blank">OGL license</a>.</p>

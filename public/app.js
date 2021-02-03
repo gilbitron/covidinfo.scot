@@ -91,6 +91,8 @@ function component() {
             const newCases = this.getValues(data, 'newCasesByPublishDate');
             const newAdmissions = this.getValues(data, 'newAdmissions');
             const newDeaths = this.getValues(data, 'newDeaths28DaysByPublishDate');
+            const newVaccinations = this.getValues(data, 'newPeopleVaccinatedFirstDoseByPublishDate');
+            const cumVaccinations = this.getValues(data, 'cumPeopleVaccinatedFirstDoseByPublishDate');
 
             const totalCases = newCases.reduce((sum, val) => sum + val, 0);
             document.getElementById('total-cases').innerText = totalCases.toLocaleString();
@@ -111,6 +113,14 @@ function component() {
                 labels: labels,
                 datasets: [{ name: 'Deaths', values: newDeaths }]
             }, '#F56565');
+            this.createChart('new-vaccinations', {
+                labels: labels,
+                datasets: [{ name: 'New', values: newVaccinations }]
+            }, '#1cb733');
+            this.createChart('cum-vaccinations', {
+                labels: labels,
+                datasets: [{ name: 'Cumulative', values: cumVaccinations }]
+            }, '#6e46f9');
         },
         updateTitle() {
             let title = 'Coronavirus (COVID-19) statistics for ' + (this.selectedArea ? this.selectedArea : 'Scotland');
@@ -133,7 +143,7 @@ function component() {
                 return item[key];
             });
         },
-        createChart(id, chartData, color) {
+        createChart(id, chartData, color, type='bar') {
             if (id === 'admissions' && this.selectedArea != '') {
                 return;
             }
@@ -143,14 +153,23 @@ function component() {
                     data: chartData,
                     height: 350,
                     animate: false,
-                    type: 'bar',
-                    colors: [color],
+                    type: type,
+                    colors: Array.isArray(color) ? color : [color],
                     barOptions: {
-                        spaceRatio: 0.1
+                        spaceRatio: 0.1,
+                    },
+                    lineOptions: {
+                        hideDots: 1,
+                        regionFill: 1,
                     },
                     axisOptions: {
                         xAxisMode: 'tick',
                         xIsSeries: true
+                    },
+                    tooltipOptions: {
+                        formatTooltipY: function(d) {
+                            return d ? d.toLocaleString() : d;
+                        },
                     }
                 });
             } else {
