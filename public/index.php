@@ -146,6 +146,6 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.min.js" defer></script>
     <script src="https://unpkg.com/frappe-charts@1.5.2/dist/frappe-charts.min.iife.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@1.25.0/build/global/luxon.min.js"></script>
-    <script src="/app.js"></script>
+    <script src="/app.js?v=20210203"></script>
 </body>
 </html>
